@@ -26,4 +26,8 @@ public class ImgService {
     public Img getPhoto(ObjectId id) {
         return photoRepo.findById(id).get();
     }
+
+    public Img save(Img photo) {
+        return photoRepo.save(photo);
+    }
 }

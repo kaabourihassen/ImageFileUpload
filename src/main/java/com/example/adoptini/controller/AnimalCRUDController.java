@@ -10,7 +10,6 @@ import com.example.adoptini.service.LikeService;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,7 +32,6 @@ public class AnimalCRUDController {
     @Autowired
     ImgService imgService;
 
-
     @GetMapping("/list")
     public List<Animal> animalList(){
         return animalService.animalsList();
@@ -46,16 +44,18 @@ public class AnimalCRUDController {
     }
 
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createAnimal(@RequestBody Animal animal, @RequestParam("imageArray") MultipartFile[] multipartFileLst) throws IOException {
+    @PostMapping()
+    public ResponseEntity createAnimal(@RequestPart("animal") Animal animal, @RequestParam("file") MultipartFile[] multipartFileLst) throws IOException {
+//        System.out.println("*********************************************");
+//        System.out.println(animal.getDescription());
+//        System.out.println("*********************************************");
         return animalService.createAnimal(animal,multipartFileLst);
     }
 
     @PutMapping(value = "/update/{animalId}")
-    public Animal updateAnimal(@PathVariable ObjectId animalId ,@RequestBody Animal animal) throws ResourceNotFoundException {
-        return animalService.updateAnimal(animalId,animal);
+    public ResponseEntity updateAnimal(@PathVariable ObjectId animalId , @RequestPart("animal") Animal animal, @RequestParam("file") MultipartFile[] multipartFileLst) throws ResourceNotFoundException {
+        return animalService.updateAnimal(animalId,animal,multipartFileLst);
     }
-
 
     @DeleteMapping("/delete/{animalId}")
     public void deleteAnimal(@PathVariable ObjectId animalId){

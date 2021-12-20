@@ -17,4 +17,5 @@ public interface AnimalRepository extends MongoRepository<Animal, ObjectId> {
     Optional<Animal> findById(ObjectId id);
 
     void deleteById(ObjectId animalId);
+    Animal save(Animal animal);
 }

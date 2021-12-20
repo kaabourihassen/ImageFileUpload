@@ -22,7 +22,7 @@ public class Img {
     @Field(value = "title")
     private String title;
     @Field(value = "imageArray")
-    private Binary file;
+    private byte[] file;
     @DBRef
     private User user;
 
